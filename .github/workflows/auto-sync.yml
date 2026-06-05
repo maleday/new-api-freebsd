@@ -3,7 +3,7 @@ name: Auto Sync Upstream
 permissions:
   contents: write  # 授予写权限，以便合并代码
 
-on:
+于:
   schedule:
     # 每天国际标准时间 0点（北京时间早上8点）运行一次
     # 这个频率非常安全，绝不会被判定为滥用
