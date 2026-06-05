@@ -3,12 +3,12 @@ name: Auto Sync Upstream
 permissions:
   contents: write  # 授予写权限，以便合并代码
 
-于:
+on:
   schedule:
-    # 每天国际标准时间 0点（北京时间早上8点）运行一次
-    # 这个频率非常安全，绝不会被判定为滥用
+    # 每天国际标准时间 0点15分（北京时间早上8点15分）运行一次
     - cron: "15 0 * * *"
-  workflow_dispatch: # 允许你手动点击按钮运行
+
+  workflow_dispatch: # 手动运行按钮
 
 jobs:
   sync_latest_from_upstream:
@@ -26,14 +26,13 @@ jobs:
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
         with:
-          # 这里的上游地址已经根据你的截图填好了，不用改
           upstream_sync_repo: k0baya/new-api-freebsd
           upstream_sync_branch: main
           target_sync_branch: main
-          target_repo_token: ${{ secrets.GITHUB_TOKEN }} # 自动令牌，安全
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
           test_mode: false
 
-      # 3. 如果同步失败（比如有冲突），输出日志
+      # 3. 如果同步失败，比如有冲突，输出日志
       - name: Sync check
         if: failure()
         run: |
